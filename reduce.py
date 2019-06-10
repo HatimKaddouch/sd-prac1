@@ -16,14 +16,14 @@ def main(args):
         if messages == maps:
             ch.stop_consuming()
 
-    params = pika.URLParameters(args['rabbit_url'])
+    params = pika.URLParameters(args['config']['rabbit_mq']['rabbit_url'])
     connection = pika.BlockingConnection(params)
     channel = connection.channel() # start a channel
-    channel.queue_declare(queue='reduce') # Declare a queue
     channel.basic_consume(callback,
                           queue='reduce',
                           no_ack=True)
     channel.start_consuming()
-
-    put_object(args['bucket_name'], args['key'], json.dumps(result))
+    cos = COSBackend(args['config']['ibm_cos'])
+    cos.put_object(args['config']['ibm_cos']['bucket'], args['key'], json.dumps(result))
+    connection.close()
     return ({'result':"OK"})

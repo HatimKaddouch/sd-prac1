@@ -24,6 +24,6 @@ def main(args):
                           no_ack=True)
     channel.start_consuming()
     cos = COSBackend(args['config']['ibm_cos'])
-    cos.put_object(args['config']['ibm_cos']['bucket'], args['key'], json.dumps(result))
+    cos.put_object(args['config']['ibm_cos']['bucket'], 'result', json.dumps(result))
     connection.close()
     return ({'result':"OK"})

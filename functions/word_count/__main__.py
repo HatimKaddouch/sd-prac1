@@ -1,4 +1,4 @@
-import cosbackend
+from cosbackend import *
 import pika
 import json
 

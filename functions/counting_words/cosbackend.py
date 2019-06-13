@@ -3,7 +3,7 @@ import ibm_botocore
 
 class COSBackend:
 
-    def _init_ (self, config):
+    def __init__ (self, config):
         client_config = ibm_botocore.client.Config(max_pool_connections=200)
         self.cos_client = ibm_boto3.client('s3',
                                             aws_access_key_id=config["access_key"],

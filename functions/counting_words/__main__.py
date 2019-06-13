@@ -6,7 +6,7 @@ def main(args):
     c = 0
     cos = COSBackend(args['config']['ibm_cos'])
     bytes = cos.get_object(args['config']['ibm_cos']['bucket'], args['key'],
-        extra_get_args={'Range':"bytes="+args['lower']+"-"+args['upper']})
+        extra_get_args={'Range':"bytes="+str(args['lower'])+"-"+str(args['upper'])})
     bytes = bytes.decode("utf-8")
     bytes = bytes.split("\n")
     for line in bytes:

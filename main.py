@@ -4,7 +4,7 @@ import sys
 
 def sfile(result, function):
     file = open(function+".json","w+")
-    file = write(result)
+    file.write(str(result))
     file.close()
 
 def main():
@@ -12,7 +12,7 @@ def main():
         with open('ibm_cloud_config', 'r') as config_file:
             res = yaml.safe_load(config_file)
     except:
-        print("ERROR: Fichero de configuración.")
+        print("ERROR: Fichero de configuracion.")
         exit(1)
     if len(sys.argv) != 3:
         print("ERROR: Parametros insuficientes.")

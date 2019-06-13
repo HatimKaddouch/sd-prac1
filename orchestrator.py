@@ -12,10 +12,10 @@ class Orchestrator:
 
 
     def map_reduce(self, function):
-        print("Lanzando función "+function)
+        print("Lanzando funcion "+function)
         key_meta = self.cos.head_object(self.config['ibm_cos']['bucket'], self.key)
-        size = key_meta['content-length']
-        size_part = int(size) // self.maps
+        size = int(key_meta['content-length'])
+        size_part = size // self.maps
         args = {'config':self.config,'maps':self.maps,'key':self.key}
         print(self.config['rabbit_mq']['rabbit_url'])
         params = pika.URLParameters(self.config['rabbit_mq']['rabbit_url'])
@@ -23,7 +23,7 @@ class Orchestrator:
         channel = connection.channel() # start a channel
         channel.queue_declare(queue='reduce') # Declare a queue
 
-        for i in range(maps):
+        for i in range(self.maps):
             args['lower'] = i * size_part
             if i == self.maps - 1:
                 args['upper'] = size - 1
